@@ -6,7 +6,11 @@ Returns a SQL query string that will create the Country table with four columns:
 */
 
 const createCountryTable = () => {
-  return;
+  return CREATE TABLE celebs (
+    name TEXT,
+    gdp INTEGER,
+    population INTEGER
+  );
 };
 
 /*
@@ -14,46 +18,68 @@ Returns a SQL query string that will create the GoldMedal table with ten columns
 */
 
 const createGoldMedalTable = () => {
-  return;
+  return CREATE TABLE GoldMedal (
+    id INTEGER,
+    year INTEGER NOT NULL,
+    city TEXT NOT NULL,
+    season TEXT NOT NULL,
+    name TEXT NOT NULL,
+    country TEXT NOT NULL,
+    gender TEXT NOT NULL,
+    sport TEXT NOT NULL,
+    discipline TEXT NOT NULL,
+    event TEXT NOT NULL
+  );
 };
 
 /*
-Returns a SQL query string that will find the number of gold medals for the given country.
+Returns a SQL query string that will find the number of gold medals for the
+given country.
 */
 
 const goldMedalNumber = country => {
-    return;
+    return SELECT COUNT(*) AS count
+    FROM GoldMedal
+    WHERE country = '${country}';
 };
 
 /*
-Returns a SQL query string that will find the year where the given country 
+Returns a SQL query string that will find the year where the given country
 won the most summer medals, along with the number of medals aliased to 'count'.
 */
 
 const mostSummerWins = country => {
-  return;
+  return SELECT year, COUNT(*) AS count
+  FROM GoldMedal
+  WHERE season = 'Summer' AND
+  WHERE country = ${country} GROUP BY year ORDER BY COUNT(*) DESC LIMIT 1;
 };
 
 /*
-Returns a SQL query string that will find the year where the given country 
+Returns a SQL query string that will find the year where the given country
 won the most winter medals, along with the number of medals aliased to 'count'.
 */
 
 const mostWinterWins = country => {
-  return;
+  return return SELECT year, COUNT(*) AS count
+  FROM GoldMedal
+  WHERE season = 'Winter' AND
+  WHERE country = ${country} GROUP BY year ORDER BY COUNT(*) DESC LIMIT 1;
 };
 
 /*
-Returns a SQL query string that will find the year where the given country 
+Returns a SQL query string that will find the year where the given country
 won the most medals, along with the number of medals aliased to 'count'.
 */
 
 const bestYear = country => {
-  return;
+  return SELECT year, COUNT(*) AS count
+  FROM GoldMedal
+  WHERE country = ${country} GROUP BY year ORDER BY COUNT(*) DESC LIMIT 1;
 };
 
 /*
-Returns a SQL query string that will find the discipline this country has 
+Returns a SQL query string that will find the discipline this country has
 won the most medals, along with the number of medals aliased to 'count'.
 */
 
@@ -62,7 +88,7 @@ const bestDiscipline = country => {
 };
 
 /*
-Returns a SQL query string that will find the sport this country has 
+Returns a SQL query string that will find the sport this country has
 won the most medals, along with the number of medals aliased to 'count'.
 */
 
@@ -71,7 +97,7 @@ const bestSport = country => {
 };
 
 /*
-Returns a SQL query string that will find the event this country has 
+Returns a SQL query string that will find the event this country has
 won the most medals, along with the number of medals aliased to 'count'.
 */
 
