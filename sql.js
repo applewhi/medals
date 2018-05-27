@@ -7,7 +7,8 @@ Returns a SQL query string that will create the Country table with four columns:
 
 const createCountryTable = () => {
   return `CREATE TABLE Country (
-    name TEXT,
+    name TEXT NOT NULL,
+    code TEXT NOT NULL,
     gdp INTEGER,
     population INTEGER);`;
 };
@@ -37,7 +38,7 @@ given country.
 */
 
 const goldMedalNumber = country => {
-    return `SELECT COUNT(*) AS count
+    return `SELECT COUNT(*) AS 'count'
     FROM GoldMedal
     WHERE country = '${country}';`
 };
@@ -48,10 +49,10 @@ won the most summer medals, along with the number of medals aliased to 'count'.
 */
 
 const mostSummerWins = country => {
-  return `SELECT year, COUNT(*) AS count
+  return `SELECT year, COUNT(*) AS 'count'
   FROM GoldMedal
-  WHERE season = 'Summer' AND
-  WHERE country = ${country} GROUP BY year ORDER BY COUNT(*) DESC LIMIT 1;`
+  WHERE country = '${country}' AND
+  season = 'Summer' GROUP BY year ORDER BY COUNT(*) DESC LIMIT 1;`;
 };
 
 /*
@@ -60,10 +61,10 @@ won the most winter medals, along with the number of medals aliased to 'count'.
 */
 
 const mostWinterWins = country => {
-  return `return SELECT year, COUNT(*) AS count
+  return `SELECT year, COUNT(*) AS 'count'
   FROM GoldMedal
   WHERE season = 'Winter' AND
-  WHERE country = ${country} GROUP BY year ORDER BY COUNT(*) DESC LIMIT 1;`
+  country = '${country}' GROUP BY year ORDER BY COUNT(*) DESC LIMIT 1;`;
 };
 
 /*
@@ -72,9 +73,9 @@ won the most medals, along with the number of medals aliased to 'count'.
 */
 
 const bestYear = country => {
-  return `SELECT year, COUNT(*) AS count
+  return `SELECT year, COUNT(*) AS 'count'
   FROM GoldMedal
-  WHERE country = ${country} GROUP BY year ORDER BY COUNT(*) DESC LIMIT 1;`
+  WHERE country = '${country}' GROUP BY year ORDER BY COUNT(*) DESC LIMIT 1;`;
 };
 
 /*
@@ -83,9 +84,10 @@ won the most medals, along with the number of medals aliased to 'count'.
 */
 
 const bestDiscipline = country => {
-  return `SELECT discipline, COUNT(*) AS count
+  return `SELECT discipline, COUNT(*) AS 'count'
   FROM GoldMedal
-  WHERE country = ${country} GROUP BY discipline ORDER BY COUNT(*) DESC LIMIT 1;`
+  WHERE country = '${country}'
+   GROUP BY discipline ORDER BY COUNT(*) DESC LIMIT 1;`;
 };
 
 /*
@@ -94,9 +96,9 @@ won the most medals, along with the number of medals aliased to 'count'.
 */
 
 const bestSport = country => {
-  return `SELECT sport, COUNT(*) AS count
+  return `SELECT sport, COUNT(*) AS 'count'
   FROM GoldMedal
-  WHERE country = ${country} GROUP BY spot ORDER BY COUNT(*) DESC LIMIT 1;`
+  WHERE country = '${country}' GROUP BY sport ORDER BY COUNT(*) DESC LIMIT 1;`;
 };
 
 /*
@@ -107,7 +109,7 @@ won the most medals, along with the number of medals aliased to 'count'.
 const bestEvent = country => {
   return `SELECT event, COUNT(*) AS count
   FROM GoldMedal
-  WHERE country = ${country} GROUP BY event ORDER BY COUNT(*) DESC LIMIT 1;`
+  WHERE country = '${country}' GROUP BY event ORDER BY COUNT(*) DESC LIMIT 1;`;
 };
 
 /*
@@ -115,10 +117,10 @@ Returns a SQL query string that will find the number of male medalists.
 */
 
 const numberMenMedalists = country => {
-  return `SELECT COUNT(DISTINCT name) AS count
+  return `SELECT COUNT(DISTINCT name) AS 'count'
   FROM GoldMedal
-  WHERE gender = 'male' and
-  WHERE country = '${country}';`
+  WHERE gender = 'Men' AND
+  country = '${country}';`;
 };
 
 /*
@@ -126,10 +128,10 @@ Returns a SQL query string that will find the number of female medalists.
 */
 
 const numberWomenMedalists = country => {
-  return `SELECT COUNT(DISTINCT name) AS count
+  return `SELECT COUNT(DISTINCT name) AS 'count'
   FROM GoldMedal
-  WHERE gender = 'female' and
-  WHERE country = '${country}';`
+  WHERE gender = 'Women' AND
+  country = '${country}';`;
 };
 
 /*
@@ -137,9 +139,9 @@ Returns a SQL query string that will find the athlete with the most medals.
 */
 
 const mostMedaledAthlete = country => {
-  return `SELECT name AS count
+  return `SELECT name AS 'count'
   FROM GoldMedal
-  WHERE country = '${country}' GROUP BY name ORDER BY COUNT(*) DESC LIMIT 1;`
+  country = '${country}' GROUP BY name ORDER BY COUNT(*) DESC LIMIT 1;`;
 };
 
 /*
@@ -160,8 +162,7 @@ const orderedMedals = (country, field, sortAscending) => {
 
   return `SELECT field
   FROM GoldMedal
-  WHERE country = '${country}' ORDER BY ${sort};`
-  ;
+  WHERE country = '${country}' ORDER BY ${sort};`;
 
 
 };
