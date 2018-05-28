@@ -139,9 +139,9 @@ Returns a SQL query string that will find the athlete with the most medals.
 */
 
 const mostMedaledAthlete = country => {
-  return `SELECT name AS 'count'
+  return `SELECT name
   FROM GoldMedal
-  country = '${country}' GROUP BY name ORDER BY COUNT(*) DESC LIMIT 1;`;
+  WHERE country = '${country}' GROUP BY name ORDER BY COUNT(*) DESC LIMIT 1;`;
 };
 
 /*
@@ -154,15 +154,15 @@ const orderedMedals = (country, field, sortAscending) => {
 
   if(field){
     if(sortAscending){
-      sort = '${field} ASC';
+      sort = `ORDER BY ${field} ASC`;
     } else {
-      sort = '${field} DESC';
+      sort = `ORDER BY ${field} DESC`;
     }
   }
 
-  return `SELECT field
+  return `SELECT *
   FROM GoldMedal
-  WHERE country = '${country}' ORDER BY ${sort};`;
+  WHERE country = '${country}' ${sort};`;
 
 
 };
@@ -175,7 +175,20 @@ aliased as 'percent'. Optionally ordered by the given field in the specified dir
 */
 
 const orderedSports = (country, field, sortAscending) => {
-  return;
+  let sort = '';
+
+  if (field){
+    if (sortAscending){
+      sort = `ORDER BY ${field} ASC`;
+    } else {
+      sort = `ORDER BY ${field} DESC`;
+    }
+  }
+
+  return `SELECT sport, COUNT(sport) AS 'count', (COUNT(sport)/(select
+    COUNT(*) FROM GoldMedal WHERE country = '${country}') * 100) AS 'percent'
+  FROM GoldMedal
+  WHERE country = '${country}' GROUP BY sport ${sort};`;
 };
 
 module.exports = {

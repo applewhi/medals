@@ -543,7 +543,7 @@ describe('orderedMedals', function() {
   it('should return a SQL query string that filters by a country', function(done) {
     const query = sql.orderedMedals('France');
     seededDb.all(query, (error, result) => {
-      if (result.length === 2 && (result[0].name === 'Babigail C' || result[1].name === 'Babigail C')) {
+      if (result && result.length === 2 && (result[0].name === 'Babigail C' || result[1].name === 'Babigail C')) {
         done();
       } else if (error) {
         done(new Error(error));
