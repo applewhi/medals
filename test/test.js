@@ -650,7 +650,7 @@ describe('orderedSports', function() {
       } else if (result.length !== 2) {
         done(new Error(`Expected query to return 2 sports, actual number of returned sports was ${result.length}`));
       } else {
-        done(new Error(`Expected Football to represent 75%, actual value was ${result[0].name}%`));
+        done(new Error(`Expected Football to represent 75%, actual value was ${result[0].percent}%`));
       }
     });
   });
